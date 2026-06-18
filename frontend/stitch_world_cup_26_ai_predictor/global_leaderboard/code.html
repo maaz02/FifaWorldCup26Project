@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Global Leaderboard - World Cup '26 AI Predictor</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;family=JetBrains+Mono:wght@500&amp;family=Sora:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-container-low": "#151b2b",
+                      "on-surface": "#dde2f8",
+                      "on-tertiary": "#263143",
+                      "secondary-fixed-dim": "#eec200",
+                      "surface-bright": "#33394a",
+                      "on-error-container": "#ffdad6",
+                      "on-secondary-container": "#645000",
+                      "surface-container-lowest": "#080e1d",
+                      "on-tertiary-container": "#394458",
+                      "tertiary-container": "#a7b2c9",
+                      "error-container": "#93000a",
+                      "primary-fixed-dim": "#7bd0ff",
+                      "outline-variant": "#3e484f",
+                      "background": "#0d1322",
+                      "surface-container": "#191f2f",
+                      "on-secondary-fixed": "#231b00",
+                      "surface-dim": "#0d1322",
+                      "surface-container-highest": "#2f3445",
+                      "outline": "#87929a",
+                      "tertiary-fixed-dim": "#bcc7de",
+                      "secondary-fixed": "#ffe083",
+                      "on-tertiary-fixed": "#111c2d",
+                      "inverse-primary": "#00668a",
+                      "surface": "#0d1322",
+                      "surface-tint": "#7bd0ff",
+                      "on-error": "#690005",
+                      "on-tertiary-fixed-variant": "#3c475a",
+                      "on-secondary-fixed-variant": "#574500",
+                      "surface-variant": "#2f3445",
+                      "on-secondary": "#3c2f00",
+                      "primary-fixed": "#c4e7ff",
+                      "secondary-container": "#eec200",
+                      "secondary": "#ffe083",
+                      "on-primary-fixed": "#001e2c",
+                      "inverse-on-surface": "#2a3040",
+                      "primary": "#8ed5ff",
+                      "on-primary-container": "#004965",
+                      "surface-container-high": "#242a3a",
+                      "on-background": "#dde2f8",
+                      "on-primary-fixed-variant": "#004c69",
+                      "tertiary-fixed": "#d8e3fb",
+                      "error": "#ffb4ab",
+                      "primary-container": "#38bdf8",
+                      "on-primary": "#00354a",
+                      "on-surface-variant": "#bdc8d1",
+                      "inverse-surface": "#dde2f8",
+                      "tertiary": "#c2cde5"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "base": "8px",
+                      "gutter": "24px",
+                      "container-padding-mobile": "20px",
+                      "container-padding-desktop": "40px",
+                      "card-gap": "16px"
+              },
+              "fontFamily": {
+                      "label-caps": [
+                              "Inter"
+                      ],
+                      "metric-mono": [
+                              "JetBrains Mono"
+                      ],
+                      "headline-md": [
+                              "Sora"
+                      ],
+                      "display-lg": [
+                              "Sora"
+                      ],
+                      "display-lg-mobile": [
+                              "Sora"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "label-caps": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "metric-mono": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "display-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "56px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "display-lg-mobile": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body-md antialiased selection:bg-primary/30 selection:text-primary-fixed">
+<aside class="h-screen w-80 fixed left-0 top-0 border-r border-outline-variant/10 bg-surface-container-lowest/60 backdrop-blur-xl shadow-2xl flex flex-col py-gutter px-6 gap-6 z-50">
+<div class="flex items-center gap-4 mb-4">
+<div class="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-inverse-primary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-primary">sports_soccer</span>
+</div>
+<div>
+<h1 class="font-headline-md text-headline-md font-bold text-on-surface tracking-tight leading-tight">World Cup '26 AI Predictor</h1>
+<p class="font-label-caps text-label-caps text-primary mt-1">AI-Powered Insights</p>
+</div>
+</div>
+<nav class="flex-1 flex flex-col gap-2">
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-colors duration-200 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">analytics</span>
+<span class="font-label-caps text-label-caps">Team Analysis</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-primary font-bold border-r-2 border-primary bg-primary/5 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">leaderboard</span>
+<span class="font-label-caps text-label-caps">Global Leaderboard</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-colors duration-200 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">model_training</span>
+<span class="font-label-caps text-label-caps">About the Model</span>
+</a>
+</nav>
+<button class="w-full bg-primary hover:bg-primary-container text-on-primary hover:text-on-primary-container font-label-caps text-label-caps py-3 px-4 rounded-lg flex items-center justify-center gap-2 transition-all duration-300 shadow-[0_0_15px_rgba(142,213,255,0.15)] hover:shadow-[0_0_20px_rgba(142,213,255,0.3)] active:scale-95">
+<span class="material-symbols-outlined text-[18px]">add_chart</span>
+            Generate Scouting Report
+        </button>
+<div class="mt-auto flex flex-col gap-2 pt-6 border-t border-outline-variant/10">
+<a class="flex items-center gap-4 px-4 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 0;">settings</span>
+<span class="font-label-caps text-label-caps">Settings</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 0;">help</span>
+<span class="font-label-caps text-label-caps">Support</span>
+</a>
+</div>
+</aside>
+<header class="fixed top-0 right-0 w-[calc(100%-20rem)] z-40 border-b border-white/5 bg-surface/40 backdrop-blur-md flex justify-between items-center h-16 px-gutter ml-80">
+<div class="flex items-center gap-6">
+<nav class="flex gap-6 h-full items-center">
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface hover:text-primary transition-all duration-300 h-full flex items-center border-b-2 border-transparent" href="#">Team Analysis</a>
+<a class="font-label-caps text-label-caps text-primary border-b-2 border-primary h-full flex items-center" href="#">Leaderboard</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden lg:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">search</span>
+<input class="bg-surface-container-high border-none rounded-full py-2 pl-10 pr-4 text-body-md font-body-md text-on-surface placeholder:text-on-surface-variant/50 focus:ring-1 focus:ring-primary w-64 transition-all" placeholder="Search teams, players..." type="text"/>
+</div>
+<button class="font-label-caps text-label-caps text-primary border border-primary/30 hover:border-primary px-4 py-2 rounded-full transition-colors hidden sm:block">Model Insights</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant/30 cursor-pointer hover:border-primary transition-colors">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="A close-up studio portrait of a young professional wearing a dark sleek shirt, illuminated by subtle cool blue rim lighting against a deep slate gray background, evoking a modern, high-tech corporate aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2FSusRYddFOxcX8b94qklV5CNYC9XwpaClyT2f2CYrsD0ISzTrM4k7wLMGs86zdoNb3ue2InHhhdgltjvrI281C7VqRt5NAomCVIBO9-eq1wTYSlxeJk9ihDUJpV3ZNKhIp2G04GNpGqiZ4uko1x7-FN-JVodJNNJsckzyVDMQRWO-d6toMP_yNtzNBihhoKo8qVdLCxVXu3QDHvbqoTlwlqjZ0D5HeJ09BsYxubNBGLEVMzvRml7b7H1GTX3RE5eqKDS8jLJEOg"/>
+</div>
+</div>
+</header>
+<main class="ml-80 pt-24 px-container-padding-desktop pb-24 min-h-screen">
+<div class="max-w-7xl mx-auto">
+<div class="mb-8 flex justify-between items-end">
+<div>
+<h2 class="font-display-lg text-display-lg text-on-surface mb-2">Global Rankings</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Live predictive model output across all 48 participating nations.</p>
+</div>
+<div class="flex gap-2">
+<button class="flex items-center gap-2 bg-surface-container-high px-4 py-2 rounded-lg text-on-surface font-label-caps text-label-caps border border-outline-variant/20 hover:bg-surface-bright transition-colors">
+<span class="material-symbols-outlined text-[18px]">filter_list</span>
+                        Filter
+                    </button>
+<button class="flex items-center gap-2 bg-surface-container-high px-4 py-2 rounded-lg text-on-surface font-label-caps text-label-caps border border-outline-variant/20 hover:bg-surface-bright transition-colors">
+<span class="material-symbols-outlined text-[18px]">download</span>
+                        Export
+                    </button>
+</div>
+</div>
+<div class="bg-surface-container-low/60 backdrop-blur-xl border border-white/10 rounded-xl overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
+<div class="grid grid-cols-[60px_2fr_1fr_1fr_1fr_1fr_1.5fr] gap-4 px-6 py-4 border-b border-outline-variant/30 bg-surface-container/50">
+<div class="font-label-caps text-label-caps text-on-surface-variant">Rank</div>
+<div class="font-label-caps text-label-caps text-on-surface-variant">Team</div>
+<div class="font-label-caps text-label-caps text-on-surface-variant">Continent</div>
+<div class="font-label-caps text-label-caps text-on-surface-variant text-right">QF %</div>
+<div class="font-label-caps text-label-caps text-on-surface-variant text-right">SF %</div>
+<div class="font-label-caps text-label-caps text-on-surface-variant text-right">Final %</div>
+<div class="font-label-caps text-label-caps text-primary text-right flex items-center justify-end gap-1 cursor-pointer group">
+                        Winner %
+                        <span class="material-symbols-outlined text-[16px] group-hover:text-primary-fixed transition-colors">arrow_downward</span>
+</div>
+</div>
+<div class="flex flex-col">
+<div class="grid grid-cols-[60px_2fr_1fr_1fr_1fr_1fr_1.5fr] gap-4 px-6 py-4 border-b border-outline-variant/10 items-center bg-secondary/5 border-l-4 border-l-secondary hover:bg-white/5 transition-colors group relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-r from-secondary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+<div class="font-metric-mono text-metric-mono text-secondary">#1</div>
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full overflow-hidden bg-surface-container-highest flex-shrink-0">
+<img alt="France Flag Placeholder" class="w-full h-full object-cover" data-alt="An abstract, high-tech stylized circular emblem featuring the colors of the French flag (blue, white, red) with subtle geometric data nodes and a glowing edge, set against a dark navy background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZB4Ry7KW-9mEWlmgULYohogkDPQN6XItMJahhYEpFUW5Ypz39E1BPe8wiMhEUn1bm7-BYxwE4zo49y6GaSTnlYEAirLzbdwMVkdYbF0dy56dJZe4f8ej8psSHluU0S1p5au1rorfCUl9IbkLASHuJKDJIiwkjgCQUvSkBBS2Lsdr-Bc9mvwJAbtXLW_fBP28qpB66tQ-q21E--I9aFn-RZ0JhNQX_DS5opdEOS24IyB9kbfOStqj-i6VHO3ktvL89NYF0WLFcWlk"/>
+</div>
+<span class="font-body-md text-body-md font-bold text-on-surface">France</span>
+</div>
+<div class="font-body-md text-body-md text-on-surface-variant">UEFA</div>
+<div class="font-metric-mono text-metric-mono text-on-surface text-right">88.5%</div>
+<div class="font-metric-mono text-metric-mono text-on-surface text-right">65.2%</div>
+<div class="font-metric-mono text-metric-mono text-on-surface text-right">35.8%</div>
+<div class="flex items-center justify-end gap-3">
+<div class="w-16 h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-[18.4%] rounded-full shadow-[0_0_8px_rgba(238,194,0,0.8)]"></div>
+</div>
+<span class="font-metric-mono text-metric-mono text-secondary font-bold w-12 text-right">18.4%</span>
+</div>
+</div>
+<div class="grid grid-cols-[60px_2fr_1fr_1fr_1fr_1fr_1.5fr] gap-4 px-6 py-4 border-b border-outline-variant/10 items-center bg-secondary/5 border-l-4 border-l-secondary/80 hover:bg-white/5 transition-colors group relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-r from-secondary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+<div class="font-metric-mono text-metric-mono text-secondary/90">#2</div>
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full overflow-hidden bg-surface-container-highest flex-shrink-0">
+<img alt="Brazil Flag Placeholder" class="w-full h-full object-cover" data-alt="An abstract, high-tech stylized circular emblem featuring the colors of the Brazilian flag (green, yellow, blue) with subtle geometric data nodes and a glowing edge, set against a dark navy background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAlJDM14PZVB_iEyEAEAeH-ola9wZv3D6a_RH4aYuZK_h3uRNQVFybXJUN4Lo9pAVmod-NYhC5k2nDecE760T5pNzsabuA-rKH_kykw089Z2B5vR1K73MAjQfW06h62JYUUGZ1tNWpC31HJ4RJ5phHQVF9xv8YZ06jhoBuPdUEVAtDNwmFpqb3qzN02ePfHhehrzT27kMHq_YgaLu0HD3Ymsq7yjkavASz444ptr6bE8XXlK80j_KdVEqvBgAYVtc_Vb_cDDBBt7UM"/>
+</div>
+<span class="font-body-md text-body-md font-bold text-on-surface">Brazil</span>
+</div>
+<div class="font-body-md text-body-md text-on-surface-variant">CONMEBOL</div>
+<div class="font-metric-mono text-metric-mono text-on-surface text-right">85.0%</div>
+<div class="font-metric-mono text-metric-mono text-on-surface text-right">60.1%</div>
+<div class="font-metric-mono text-metric-mono text-on-surface text-right">32.4%</div>
+<div class="flex items-center justify-end gap-3">
+<div class="w-16 h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-secondary/80 w-[16.2%] rounded-full shadow-[0_0_8px_rgba(238,194,0,0.5)]"></div>
+</div>
+<span class="font-metric-mono text-metric-mono text-secondary/90 font-bold w-12 text-right">16.2%</span>
+</div>
+</div>
+<div class="grid grid-cols-[60px_2fr_1fr_1fr_1fr_1fr_1.5fr] gap-4 px-6 py-4 border-b border-outline-variant/10 items-center bg-secondary/5 border-l-4 border-l-secondary/60 hover:bg-white/5 transition-colors group relative overflow-hidden">
+<div class="font-metric-mono text-metric-mono text-secondary/80">#3</div>
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full overflow-hidden bg-surface-container-highest flex-shrink-0">
+<img alt="England Flag Placeholder" class="w-full h-full object-cover" data-alt="An abstract, high-tech stylized circular emblem featuring the colors of the English flag (white, red cross) with subtle geometric data nodes and a glowing edge, set against a dark navy background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBannr_heMy2SB7Qizbbxc4vWZe-1UwFSRom301xNkwMkWJ70Q6B8ulS9Spw2v5nYIMaLkGycXtxbtVB4ZxBm6PLeZ6MRuCibeg9SKLDT7Vq3iLgfhjIQ-JYdptY-Dpiifyx_Vg-dPB8h--dCuEK4-zHn1Il9VHSvZBWjNSq-JO9GA5U_yJ7s4HVVdrOCh9SkTfChcoKF-i6ilb93CowpGTSuyzS8YVH8JPPrkLrxjFn_x4hVdU1x25LjJlgZFz039KSds1s3qojX8"/>
+</div>
+<span class="font-body-md text-body-md font-bold text-on-surface">England</span>
+</div>
+<div class="font-body-md text-body-md text-on-surface-variant">UEFA</div>
+<div class="font-metric-mono text-metric-mono text-on-surface text-right">82.3%</div>
+<div class="font-metric-mono text-metric-mono text-on-surface text-right">55.4%</div>
+<div class="font-metric-mono text-metric-mono text-on-surface text-right">28.9%</div>
+<div class="flex items-center justify-end gap-3">
+<div class="w-16 h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-secondary/60 w-[14.1%] rounded-full"></div>
+</div>
+<span class="font-metric-mono text-metric-mono text-secondary/80 font-bold w-12 text-right">14.1%</span>
+</div>
+</div>
+<div class="grid grid-cols-[60px_2fr_1fr_1fr_1fr_1fr_1.5fr] gap-4 px-6 py-4 border-b border-outline-variant/10 items-center hover:bg-white/5 transition-colors bg-surface-container-low">
+<div class="font-metric-mono text-metric-mono text-on-surface-variant">4</div>
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full overflow-hidden bg-surface-container-highest flex-shrink-0 flex items-center justify-center font-label-caps text-on-surface-variant">AR</div>
+<span class="font-body-md text-body-md text-on-surface">Argentina</span>
+</div>
+<div class="font-body-md text-body-md text-on-surface-variant">CONMEBOL</div>
+<div class="font-metric-mono text-metric-mono text-on-surface-variant text-right">78.9%</div>
+<div class="font-metric-mono text-metric-mono text-on-surface-variant text-right">50.2%</div>
+<div class="font-metric-mono text-metric-mono text-on-surface-variant text-right">25.1%</div>
+<div class="flex items-center justify-end gap-3">
+<div class="w-16 h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-primary/70 w-[11.8%] rounded-full"></div>
+</div>
+<span class="font-metric-mono text-metric-mono text-primary w-12 text-right">11.8%</span>
+</div>
+</div>
+<div class="grid grid-cols-[60px_2fr_1fr_1fr_1fr_1fr_1.5fr] gap-4 px-6 py-4 border-b border-outline-variant/10 items-center hover:bg-white/5 transition-colors bg-transparent">
+<div class="font-metric-mono text-metric-mono text-on-surface-variant">5</div>
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full overflow-hidden bg-surface-container-highest flex-shrink-0 flex items-center justify-center font-label-caps text-on-surface-variant">ES</div>
+<span class="font-body-md text-body-md text-on-surface">Spain</span>
+</div>
+<div class="font-body-md text-body-md text-on-surface-variant">UEFA</div>
+<div class="font-metric-mono text-metric-mono text-on-surface-variant text-right">75.4%</div>
+<div class="font-metric-mono text-metric-mono text-on-surface-variant text-right">45.8%</div>
+<div class="font-metric-mono text-metric-mono text-on-surface-variant text-right">22.0%</div>
+<div class="flex items-center justify-end gap-3">
+<div class="w-16 h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-primary/70 w-[9.5%] rounded-full"></div>
+</div>
+<span class="font-metric-mono text-metric-mono text-primary w-12 text-right">9.5%</span>
+</div>
+</div>
+<div class="grid grid-cols-[60px_2fr_1fr_1fr_1fr_1fr_1.5fr] gap-4 px-6 py-4 border-b border-outline-variant/10 items-center hover:bg-white/5 transition-colors bg-surface-container-low">
+<div class="font-metric-mono text-metric-mono text-on-surface-variant">6</div>
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full overflow-hidden bg-surface-container-highest flex-shrink-0 flex items-center justify-center font-label-caps text-on-surface-variant">PT</div>
+<span class="font-body-md text-body-md text-on-surface">Portugal</span>
+</div>
+<div class="font-body-md text-body-md text-on-surface-variant">UEFA</div>
+<div class="font-metric-mono text-metric-mono text-on-surface-variant text-right">72.1%</div>
+<div class="font-metric-mono text-metric-mono text-on-surface-variant text-right">40.3%</div>
+<div class="font-metric-mono text-metric-mono text-on-surface-variant text-right">18.5%</div>
+<div class="flex items-center justify-end gap-3">
+<div class="w-16 h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-primary/60 w-[7.2%] rounded-full"></div>
+</div>
+<span class="font-metric-mono text-metric-mono text-primary w-12 text-right">7.2%</span>
+</div>
+</div>
+<div class="grid grid-cols-[60px_2fr_1fr_1fr_1fr_1fr_1.5fr] gap-4 px-6 py-4 border-b border-outline-variant/10 items-center hover:bg-white/5 transition-colors bg-transparent">
+<div class="font-metric-mono text-metric-mono text-on-surface-variant">7</div>
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full overflow-hidden bg-surface-container-highest flex-shrink-0 flex items-center justify-center font-label-caps text-on-surface-variant">DE</div>
+<span class="font-body-md text-body-md text-on-surface">Germany</span>
+</div>
+<div class="font-body-md text-body-md text-on-surface-variant">UEFA</div>
+<div class="font-metric-mono text-metric-mono text-on-surface-variant text-right">68.5%</div>
+<div class="font-metric-mono text-metric-mono text-on-surface-variant text-right">38.0%</div>
+<div class="font-metric-mono text-metric-mono text-on-surface-variant text-right">16.2%</div>
+<div class="flex items-center justify-end gap-3">
+<div class="w-16 h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-primary/60 w-[6.8%] rounded-full"></div>
+</div>
+<span class="font-metric-mono text-metric-mono text-primary w-12 text-right">6.8%</span>
+</div>
+</div>
+<div class="grid grid-cols-[60px_2fr_1fr_1fr_1fr_1fr_1.5fr] gap-4 px-6 py-4 border-b border-outline-variant/10 items-center hover:bg-white/5 transition-colors bg-surface-container-low">
+<div class="font-metric-mono text-metric-mono text-on-surface-variant">8</div>
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full overflow-hidden bg-surface-container-highest flex-shrink-0 flex items-center justify-center font-label-caps text-on-surface-variant">NL</div>
+<span class="font-body-md text-body-md text-on-surface">Netherlands</span>
+</div>
+<div class="font-body-md text-body-md text-on-surface-variant">UEFA</div>
+<div class="font-metric-mono text-metric-mono text-on-surface-variant text-right">65.2%</div>
+<div class="font-metric-mono text-metric-mono text-on-surface-variant text-right">35.1%</div>
+<div class="font-metric-mono text-metric-mono text-on-surface-variant text-right">14.0%</div>
+<div class="flex items-center justify-end gap-3">
+<div class="w-16 h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-primary/50 w-[5.5%] rounded-full"></div>
+</div>
+<span class="font-metric-mono text-metric-mono text-primary w-12 text-right">5.5%</span>
+</div>
+</div>
+<div class="grid grid-cols-[60px_2fr_1fr_1fr_1fr_1fr_1.5fr] gap-4 px-6 py-4 border-b border-outline-variant/10 items-center hover:bg-white/5 transition-colors bg-transparent">
+<div class="font-metric-mono text-metric-mono text-on-surface-variant">9</div>
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full overflow-hidden bg-surface-container-highest flex-shrink-0 flex items-center justify-center font-label-caps text-on-surface-variant">UY</div>
+<span class="font-body-md text-body-md text-on-surface">Uruguay</span>
+</div>
+<div class="font-body-md text-body-md text-on-surface-variant">CONMEBOL</div>
+<div class="font-metric-mono text-metric-mono text-on-surface-variant text-right">60.8%</div>
+<div class="font-metric-mono text-metric-mono text-on-surface-variant text-right">30.5%</div>
+<div class="font-metric-mono text-metric-mono text-on-surface-variant text-right">11.2%</div>
+<div class="flex items-center justify-end gap-3">
+<div class="w-16 h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-primary/50 w-[4.1%] rounded-full"></div>
+</div>
+<span class="font-metric-mono text-metric-mono text-primary w-12 text-right">4.1%</span>
+</div>
+</div>
+<div class="grid grid-cols-[60px_2fr_1fr_1fr_1fr_1fr_1.5fr] gap-4 px-6 py-4 items-center hover:bg-white/5 transition-colors bg-surface-container-low">
+<div class="font-metric-mono text-metric-mono text-on-surface-variant">10</div>
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full overflow-hidden bg-surface-container-highest flex-shrink-0 flex items-center justify-center font-label-caps text-on-surface-variant">IT</div>
+<span class="font-body-md text-body-md text-on-surface">Italy</span>
+</div>
+<div class="font-body-md text-body-md text-on-surface-variant">UEFA</div>
+<div class="font-metric-mono text-metric-mono text-on-surface-variant text-right">58.3%</div>
+<div class="font-metric-mono text-metric-mono text-on-surface-variant text-right">28.0%</div>
+<div class="font-metric-mono text-metric-mono text-on-surface-variant text-right">9.5%</div>
+<div class="flex items-center justify-end gap-3">
+<div class="w-16 h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-primary/40 w-[3.8%] rounded-full"></div>
+</div>
+<span class="font-metric-mono text-metric-mono text-primary w-12 text-right">3.8%</span>
+</div>
+</div>
+</div>
+<div class="px-6 py-4 border-t border-outline-variant/30 bg-surface/50 flex justify-center">
+<button class="font-label-caps text-label-caps text-primary hover:text-primary-fixed transition-colors flex items-center gap-2">
+                        View All 48 Teams
+                        <span class="material-symbols-outlined text-[16px]">expand_more</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+</body></html>

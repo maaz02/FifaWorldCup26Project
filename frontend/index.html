@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>World Cup '26 AI Predictor</title>
+<meta name="description" content="AI-powered 2026 FIFA World Cup predictions with machine learning analytics and LLM scouting reports."/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@500&family=Sora:wght@600;700&display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        "surface-container-low": "#151b2b",
+        "on-surface": "#dde2f8",
+        "on-tertiary": "#263143",
+        "secondary-fixed-dim": "#eec200",
+        "surface-bright": "#33394a",
+        "on-error-container": "#ffdad6",
+        "on-secondary-container": "#645000",
+        "surface-container-lowest": "#080e1d",
+        "on-tertiary-container": "#394458",
+        "tertiary-container": "#a7b2c9",
+        "error-container": "#93000a",
+        "primary-fixed-dim": "#7bd0ff",
+        "outline-variant": "#3e484f",
+        "background": "#0d1322",
+        "surface-container": "#191f2f",
+        "on-secondary-fixed": "#231b00",
+        "surface-dim": "#0d1322",
+        "surface-container-highest": "#2f3445",
+        "outline": "#87929a",
+        "tertiary-fixed-dim": "#bcc7de",
+        "secondary-fixed": "#ffe083",
+        "on-tertiary-fixed": "#111c2d",
+        "inverse-primary": "#00668a",
+        "surface": "#0d1322",
+        "surface-tint": "#7bd0ff",
+        "on-error": "#690005",
+        "on-tertiary-fixed-variant": "#3c475a",
+        "on-secondary-fixed-variant": "#574500",
+        "surface-variant": "#2f3445",
+        "on-secondary": "#3c2f00",
+        "primary-fixed": "#c4e7ff",
+        "secondary-container": "#eec200",
+        "secondary": "#ffe083",
+        "on-primary-fixed": "#001e2c",
+        "inverse-on-surface": "#2a3040",
+        "primary": "#8ed5ff",
+        "on-primary-container": "#004965",
+        "surface-container-high": "#242a3a",
+        "on-background": "#dde2f8",
+        "on-primary-fixed-variant": "#004c69",
+        "tertiary-fixed": "#d8e3fb",
+        "error": "#ffb4ab",
+        "primary-container": "#38bdf8",
+        "on-primary": "#00354a",
+        "on-surface-variant": "#bdc8d1",
+        "inverse-surface": "#dde2f8",
+        "tertiary": "#c2cde5"
+      },
+      borderRadius: {
+        DEFAULT: "0.25rem",
+        lg: "0.5rem",
+        xl: "0.75rem",
+        full: "9999px"
+      },
+      spacing: {
+        base: "8px",
+        gutter: "24px",
+        "container-padding-mobile": "20px",
+        "container-padding-desktop": "40px",
+        "card-gap": "16px"
+      },
+      fontFamily: {
+        "label-caps": ["Inter", "sans-serif"],
+        "metric-mono": ["JetBrains Mono", "monospace"],
+        "headline-md": ["Sora", "sans-serif"],
+        "display-lg": ["Sora", "sans-serif"],
+        "body-md": ["Inter", "sans-serif"],
+        "body-lg": ["Inter", "sans-serif"]
+      },
+      fontSize: {
+        "label-caps": ["12px", { lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "700" }],
+        "metric-mono": ["14px", { lineHeight: "20px", fontWeight: "500" }],
+        "headline-md": ["24px", { lineHeight: "32px", fontWeight: "600" }],
+        "display-lg": ["48px", { lineHeight: "56px", letterSpacing: "-0.02em", fontWeight: "700" }],
+        "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+        "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }]
+      }
+    }
+  }
+}
+</script>
+<style>
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  }
+  /* Smooth page transitions */
+  .view-hidden { display: none; }
+  /* Animate circular progress on load */
+  @keyframes dashIn {
+    from { stroke-dashoffset: 251.2; }
+  }
+  .dash-animate { animation: dashIn 1.2s ease-out forwards; }
+  /* Pulse animation for loading */
+  @keyframes pulse-glow {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
+  .pulse-glow { animation: pulse-glow 1.5s ease-in-out infinite; }
+  /* Skeleton shimmer */
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+  .skeleton {
+    background: linear-gradient(90deg, #242a3a 25%, #2f3445 50%, #242a3a 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 8px;
+  }
+  /* Scrollbar styling */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #3e484f; border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: #87929a; }
+</style>
+</head>
+
+<body class="bg-background text-on-background min-h-screen font-body-md antialiased selection:bg-primary/30">
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SIDE NAVIGATION BAR                            -->
+<!-- ═══════════════════════════════════════════════ -->
+<nav class="h-screen w-80 fixed left-0 top-0 border-r border-outline-variant/10 bg-surface-container-lowest/60 backdrop-blur-xl shadow-2xl flex flex-col py-gutter px-6 gap-6 z-50">
+  <!-- Header -->
+  <div class="flex items-center gap-4 mb-4">
+    <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-inverse-primary flex items-center justify-center shrink-0">
+      <span class="material-symbols-outlined text-on-primary">sports_soccer</span>
+    </div>
+    <div>
+      <h1 class="font-headline-md text-[16px] leading-tight font-bold text-on-surface tracking-tight">World Cup '26 AI Predictor</h1>
+      <p class="font-label-caps text-[10px] text-primary mt-1 opacity-80">AI-Powered Insights</p>
+    </div>
+  </div>
+
+  <!-- Main Navigation -->
+  <div class="flex flex-col gap-2 flex-1">
+    <a id="nav-team-analysis" onclick="switchView('team-analysis')" class="flex items-center gap-3 px-4 py-3 rounded-lg text-primary font-bold border-r-2 border-primary bg-primary/5 hover:bg-white/5 transition-colors duration-200 cursor-pointer active:scale-95">
+      <span class="material-symbols-outlined">analytics</span>
+      <span class="font-label-caps text-label-caps">Team Analysis</span>
+    </a>
+    <a id="nav-leaderboard" onclick="switchView('leaderboard')" class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-colors duration-200 cursor-pointer active:scale-95">
+      <span class="material-symbols-outlined">leaderboard</span>
+      <span class="font-label-caps text-label-caps">Global Leaderboard</span>
+    </a>
+  </div>
+
+  <!-- Generate Report CTA -->
+  <button id="sidebar-generate-btn" onclick="generateReport()" class="w-full bg-primary/10 text-primary border border-primary/20 font-label-caps text-label-caps py-3 rounded-lg hover:bg-primary/20 transition-colors duration-200 flex justify-center items-center gap-2">
+    <span class="material-symbols-outlined text-[18px]">magic_button</span>
+    Generate Scouting Report
+  </button>
+
+  <!-- Footer -->
+  <div class="flex flex-col gap-2 pt-4 border-t border-outline-variant/10">
+    <a class="flex items-center gap-3 px-4 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-colors duration-200" href="#">
+      <span class="material-symbols-outlined text-[20px]">settings</span>
+      <span class="font-label-caps text-label-caps">Settings</span>
+    </a>
+    <a class="flex items-center gap-3 px-4 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-colors duration-200" href="#">
+      <span class="material-symbols-outlined text-[20px]">help</span>
+      <span class="font-label-caps text-label-caps">Support</span>
+    </a>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- TOP APP BAR                                    -->
+<!-- ═══════════════════════════════════════════════ -->
+<header class="fixed top-0 right-0 w-[calc(100%-20rem)] z-40 border-b border-white/5 bg-surface/40 backdrop-blur-md flex justify-between items-center h-16 px-gutter">
+  <div class="flex items-center gap-6 h-full">
+    <a id="tab-team-analysis" onclick="switchView('team-analysis')" class="h-full flex items-center text-primary border-b-2 border-primary pb-1 font-label-caps text-label-caps cursor-pointer active:opacity-80">Team Analysis</a>
+    <a id="tab-leaderboard" onclick="switchView('leaderboard')" class="h-full flex items-center text-on-surface-variant hover:text-on-surface hover:text-primary transition-all duration-300 font-label-caps text-label-caps cursor-pointer active:opacity-80 border-b-2 border-transparent">Leaderboard</a>
+  </div>
+  <div class="flex items-center gap-4">
+    <button class="text-on-surface-variant hover:text-on-surface p-2 rounded-full hover:bg-white/5 transition-colors">
+      <span class="material-symbols-outlined">notifications</span>
+    </button>
+    <button class="text-on-surface-variant hover:text-on-surface p-2 rounded-full hover:bg-white/5 transition-colors">
+      <span class="material-symbols-outlined">account_circle</span>
+    </button>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- MAIN LAYOUT CONTAINER                          -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="ml-80 pt-16 flex h-screen w-[calc(100%-20rem)]">
+
+  <!-- ─────────────────────────────────────────── -->
+  <!-- Secondary Sidebar: Team List                -->
+  <!-- ─────────────────────────────────────────── -->
+  <aside id="team-sidebar" class="w-64 border-r border-outline-variant/10 bg-surface-container-low/30 overflow-y-auto flex flex-col">
+    <div class="p-4 border-b border-outline-variant/10">
+      <div class="relative">
+        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">search</span>
+        <input id="team-search" oninput="filterTeams()" class="w-full bg-surface-container-high border-none rounded-lg py-2 pl-10 pr-4 text-body-md font-body-md text-on-surface placeholder:text-on-surface-variant focus:ring-1 focus:ring-primary focus:outline-none" placeholder="Search Teams..." type="text"/>
+      </div>
+    </div>
+    <div id="team-list" class="flex-1 py-2">
+      <!-- Populated dynamically -->
+    </div>
+  </aside>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- VIEW 1: TEAM ANALYSIS                      -->
+  <!-- ═══════════════════════════════════════════ -->
+  <main id="view-team-analysis" class="flex-1 overflow-y-auto p-container-padding-desktop bg-gradient-to-br from-background to-surface-container-lowest">
+
+    <!-- Content Header -->
+    <div class="flex items-end justify-between mb-10">
+      <div>
+        <div class="flex items-center gap-3 mb-2">
+          <span id="team-continent-chip" class="px-3 py-1 rounded-full bg-surface-container-high border border-outline-variant/20 font-label-caps text-[10px] text-on-surface-variant tracking-wider uppercase">Europe</span>
+        </div>
+        <h2 id="team-name-header" class="font-display-lg text-display-lg text-on-surface">France</h2>
+      </div>
+    </div>
+
+    <!-- Probability Cards -->
+    <div class="mb-12">
+      <h3 class="font-headline-md text-[18px] text-on-surface mb-6 flex items-center gap-2">
+        <span class="material-symbols-outlined text-primary">timeline</span>
+        Tournament Progression Probabilities
+      </h3>
+      <div id="prob-cards" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-card-gap">
+        <!-- Populated dynamically -->
+      </div>
+    </div>
+
+    <!-- Stats Row -->
+    <div class="mb-12">
+      <h3 class="font-headline-md text-[18px] text-on-surface mb-6 flex items-center gap-2">
+        <span class="material-symbols-outlined text-tertiary-fixed-dim">query_stats</span>
+        Pre-Tournament Profile
+      </h3>
+      <div id="stats-cards" class="grid grid-cols-1 md:grid-cols-3 gap-card-gap">
+        <!-- Populated dynamically -->
+      </div>
+    </div>
+
+    <!-- AI Scouting Report -->
+    <div>
+      <h3 class="font-headline-md text-[18px] text-on-surface mb-6 flex items-center gap-2">
+        <span class="material-symbols-outlined text-primary-container">memory</span>
+        Tactical AI Scouting Report
+      </h3>
+      <div class="bg-surface-container-high/50 backdrop-blur-xl border border-primary/20 rounded-xl p-8 relative overflow-hidden">
+        <div class="absolute -top-24 -right-24 w-64 h-64 bg-primary/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="flex flex-col md:flex-row gap-8 items-start relative z-10">
+          <div class="flex-shrink-0">
+            <button id="generate-report-btn" onclick="generateReport()" class="bg-primary text-on-primary px-6 py-4 rounded-lg font-label-caps text-label-caps font-bold tracking-wide flex items-center gap-3 shadow-[0_0_20px_rgba(142,213,255,0.3)] hover:shadow-[0_0_30px_rgba(142,213,255,0.5)] transition-shadow duration-300">
+              <span class="material-symbols-outlined">bolt</span>
+              Generate AI Report (Llama 3.1)
+            </button>
+            <p class="font-label-caps text-[10px] text-on-surface-variant mt-3 text-center uppercase tracking-widest">Powered by Groq</p>
+          </div>
+          <div id="report-container" class="flex-1 bg-surface-container-lowest/50 border-l-4 border-primary rounded-r-xl p-6 relative">
+            <span class="material-symbols-outlined absolute top-4 right-4 text-primary/20 text-4xl pointer-events-none">format_quote</span>
+            <p id="report-text" class="font-body-lg text-body-lg text-on-surface/90 leading-relaxed">
+              Select a team and click "Generate AI Report" to receive a tactical scouting narrative powered by Llama 3.1.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="h-12"></div>
+  </main>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- VIEW 2: GLOBAL LEADERBOARD                 -->
+  <!-- ═══════════════════════════════════════════ -->
+  <main id="view-leaderboard" class="flex-1 overflow-y-auto p-container-padding-desktop view-hidden">
+    <div class="max-w-7xl mx-auto">
+      <div class="mb-8 flex justify-between items-end">
+        <div>
+          <h2 class="font-display-lg text-display-lg text-on-surface mb-2">Global Rankings</h2>
+          <p class="font-body-lg text-body-lg text-on-surface-variant">Live predictive model output across all 48 participating nations.</p>
+        </div>
+      </div>
+
+      <div class="bg-surface-container-low/60 backdrop-blur-xl border border-white/10 rounded-xl overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
+        <!-- Table Header -->
+        <div class="grid grid-cols-[60px_2fr_1fr_1fr_1fr_1fr_1.5fr] gap-4 px-6 py-4 border-b border-outline-variant/30 bg-surface-container/50">
+          <div class="font-label-caps text-label-caps text-on-surface-variant">Rank</div>
+          <div class="font-label-caps text-label-caps text-on-surface-variant">Team</div>
+          <div class="font-label-caps text-label-caps text-on-surface-variant">Continent</div>
+          <div class="font-label-caps text-label-caps text-on-surface-variant text-right">QF %</div>
+          <div class="font-label-caps text-label-caps text-on-surface-variant text-right">SF %</div>
+          <div class="font-label-caps text-label-caps text-on-surface-variant text-right">Final %</div>
+          <div class="font-label-caps text-label-caps text-primary text-right flex items-center justify-end gap-1">
+            Winner %
+            <span class="material-symbols-outlined text-[16px]">arrow_downward</span>
+          </div>
+        </div>
+        <!-- Table Body -->
+        <div id="leaderboard-body" class="flex flex-col">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+    </div>
+    <div class="h-12"></div>
+  </main>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- JAVASCRIPT — API Wiring                        -->
+<!-- ═══════════════════════════════════════════════ -->
+<script>
+const API_BASE = window.location.origin;
+
+// ── State ──────────────────────────────────────
+let allTeams = [];
+let selectedTeam = null;
+let teamDataCache = {};
+let leaderboardData = [];
+
+// ── Init ───────────────────────────────────────
+document.addEventListener('DOMContentLoaded', async () => {
+  await loadTeams();
+  await loadLeaderboard();
+  if (allTeams.length > 0) {
+    selectTeam(allTeams[0]);
+  }
+});
+
+// ── Load Team List ─────────────────────────────
+async function loadTeams() {
+  try {
+    const res = await fetch(`${API_BASE}/api/teams`);
+    const data = await res.json();
+    allTeams = data.teams;
+    renderTeamList(allTeams);
+  } catch (err) {
+    console.error('Failed to load teams:', err);
+  }
+}
+
+// ── Load Leaderboard ───────────────────────────
+async function loadLeaderboard() {
+  try {
+    const res = await fetch(`${API_BASE}/api/leaderboard`);
+    const data = await res.json();
+    leaderboardData = data.leaderboard;
+    renderLeaderboard(leaderboardData);
+  } catch (err) {
+    console.error('Failed to load leaderboard:', err);
+  }
+}
+
+// ── Select a Team ──────────────────────────────
+async function selectTeam(teamName) {
+  selectedTeam = teamName;
+  highlightSelectedTeam(teamName);
+
+  // Show loading state
+  document.getElementById('team-name-header').textContent = teamName;
+  document.getElementById('team-continent-chip').textContent = '...';
+
+  try {
+    let teamData;
+    if (teamDataCache[teamName]) {
+      teamData = teamDataCache[teamName];
+    } else {
+      const res = await fetch(`${API_BASE}/api/team/${encodeURIComponent(teamName)}`);
+      teamData = await res.json();
+      teamDataCache[teamName] = teamData;
+    }
+    renderTeamAnalysis(teamData);
+  } catch (err) {
+    console.error('Failed to load team data:', err);
+  }
+}
+
+// ── Render Team List in Sidebar ────────────────
+function renderTeamList(teams) {
+  const container = document.getElementById('team-list');
+  container.innerHTML = teams.map(name => {
+    const code = name.substring(0, 2).toUpperCase();
+    return `
+      <button onclick="selectTeam('${name.replace(/'/g, "\\'")}')"
+        data-team="${name}"
+        class="team-btn w-full flex items-center justify-between px-4 py-3 text-on-surface-variant hover:bg-surface-container hover:text-on-surface border-l-2 border-transparent transition-colors">
+        <div class="flex items-center gap-3">
+          <div class="w-6 h-6 rounded-full bg-surface-container-highest border border-outline-variant/30 flex items-center justify-center text-[10px] font-bold text-on-surface">${code}</div>
+          <span class="font-body-md font-medium">${name}</span>
+        </div>
+      </button>
+    `;
+  }).join('');
+}
+
+function highlightSelectedTeam(teamName) {
+  document.querySelectorAll('.team-btn').forEach(btn => {
+    const isSelected = btn.dataset.team === teamName;
+    btn.classList.toggle('bg-primary/10', isSelected);
+    btn.classList.toggle('border-l-primary', isSelected);
+    btn.classList.toggle('text-primary', isSelected);
+    btn.classList.toggle('border-transparent', !isSelected);
+    btn.classList.toggle('text-on-surface-variant', !isSelected);
+  });
+}
+
+// ── Filter Teams ───────────────────────────────
+function filterTeams() {
+  const query = document.getElementById('team-search').value.toLowerCase();
+  const filtered = allTeams.filter(t => t.toLowerCase().includes(query));
+  renderTeamList(filtered);
+  if (selectedTeam) highlightSelectedTeam(selectedTeam);
+}
+
+// ── Render Team Analysis View ──────────────────
+function renderTeamAnalysis(data) {
+  const { team, continent, probabilities, stats } = data;
+
+  document.getElementById('team-name-header').textContent = team;
+  document.getElementById('team-continent-chip').textContent = continent;
+
+  // Reset report
+  document.getElementById('report-text').textContent =
+    `Click "Generate AI Report" to receive a tactical scouting narrative for ${team}.`;
+
+  // Probability cards
+  const probItems = [
+    { label: 'Quarter-Final', value: probabilities.quarter_finalist, accent: 'primary' },
+    { label: 'Semi-Final',    value: probabilities.semi_finalist,    accent: 'primary' },
+    { label: 'Final',         value: probabilities.finalist,         accent: 'secondary' },
+    { label: 'Winner',        value: probabilities.winner,           accent: 'secondary' },
+  ];
+
+  const probContainer = document.getElementById('prob-cards');
+  probContainer.innerHTML = probItems.map(item => {
+    const pct = (item.value * 100).toFixed(1);
+    const circumference = 251.2;
+    const offset = circumference - (circumference * item.value);
+    const isWinner = item.label === 'Winner';
+    const borderHover = `hover:border-${item.accent}/30`;
+    const textColor = item.accent === 'secondary' ? 'text-secondary' : 'text-primary';
+    const dropShadow = item.accent === 'secondary' ? "drop-shadow-[0_0_8px_rgba(255,224,131,0.3)]" : "";
+
+    return `
+      <div class="bg-surface-container-high/40 backdrop-blur-lg border border-white/5 ${borderHover} transition-colors duration-300 rounded-xl p-6 flex flex-col items-center justify-center relative overflow-hidden group">
+        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-${item.accent}/0 to-transparent group-hover:via-${item.accent}/50 transition-all duration-500"></div>
+        ${isWinner ? `<div class="absolute inset-0 bg-secondary/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity"></div>` : ''}
+        <div class="relative w-24 h-24 mb-4">
+          <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+            <circle class="text-surface-container-highest" cx="50" cy="50" fill="transparent" r="40" stroke="currentColor" stroke-width="8"></circle>
+            <circle class="text-${item.accent} dash-animate" cx="50" cy="50" fill="transparent" r="40" stroke="currentColor" stroke-dasharray="${circumference}" stroke-dashoffset="${offset}" stroke-width="8"></circle>
+          </svg>
+          <div class="absolute inset-0 flex items-center justify-center">
+            <span class="font-metric-mono text-metric-mono text-on-surface font-bold text-lg ${dropShadow}">${pct}%</span>
+          </div>
+        </div>
+        <span class="font-label-caps text-label-caps ${textColor} uppercase tracking-widest ${isWinner ? 'font-bold' : ''}">${item.label}</span>
+      </div>
+    `;
+  }).join('');
+
+  // Stats cards
+  const totalMatches = stats.wins_last_4y + stats.draws_last_4y + stats.losses_last_4y;
+  const marketValueFormatted = stats.squad_total_market_value_eur >= 1e9
+    ? `\u20AC${(stats.squad_total_market_value_eur / 1e9).toFixed(2)}B`
+    : `\u20AC${(stats.squad_total_market_value_eur / 1e6).toFixed(0)}M`;
+
+  const statsContainer = document.getElementById('stats-cards');
+  statsContainer.innerHTML = `
+    <div class="bg-surface-container-high/30 border border-white/5 rounded-xl p-6 flex items-center gap-4">
+      <div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center border border-white/5">
+        <span class="material-symbols-outlined text-primary">euro_symbol</span>
+      </div>
+      <div>
+        <p class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider mb-1">Squad Value</p>
+        <p class="font-metric-mono text-metric-mono text-2xl text-on-surface">${marketValueFormatted}</p>
+      </div>
+    </div>
+    <div class="bg-surface-container-high/30 border border-white/5 rounded-xl p-6 flex items-center gap-4">
+      <div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center border border-white/5">
+        <span class="material-symbols-outlined text-secondary">workspace_premium</span>
+      </div>
+      <div>
+        <p class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider mb-1">FIFA Rank</p>
+        <p class="font-metric-mono text-metric-mono text-2xl text-on-surface">${stats.fifa_rank_pre_tournament}</p>
+      </div>
+    </div>
+    <div class="bg-surface-container-high/30 border border-white/5 rounded-xl p-6 flex items-center gap-4">
+      <div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center border border-white/5">
+        <span class="material-symbols-outlined text-tertiary">history</span>
+      </div>
+      <div>
+        <p class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider mb-1">Form (Last ${totalMatches})</p>
+        <div class="flex gap-2 items-center mt-1">
+          <span class="font-metric-mono text-metric-mono text-sm text-green-400">W: ${stats.wins_last_4y}</span>
+          <span class="text-outline-variant">|</span>
+          <span class="font-metric-mono text-metric-mono text-sm text-red-400">L: ${stats.losses_last_4y}</span>
+          <span class="text-outline-variant">|</span>
+          <span class="font-metric-mono text-metric-mono text-sm text-gray-400">D: ${stats.draws_last_4y}</span>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// ── Render Leaderboard ─────────────────────────
+function renderLeaderboard(data) {
+  const container = document.getElementById('leaderboard-body');
+  container.innerHTML = data.map((row, i) => {
+    const rank = i + 1;
+    const isTop3 = rank <= 3;
+    const code = row.team.substring(0, 2).toUpperCase();
+    const winnerPct = (row.prob_winner * 100).toFixed(1);
+    const bgClass = isTop3
+      ? 'bg-secondary/5 border-l-4 border-l-secondary' + (rank === 1 ? '' : `/${100 - rank * 20}`)
+      : (rank % 2 === 0 ? 'bg-surface-container-low' : 'bg-transparent');
+    const rankColor = isTop3 ? 'text-secondary' : 'text-on-surface-variant';
+    const nameWeight = isTop3 ? 'font-bold' : '';
+    const barColor = isTop3 ? 'bg-secondary' : 'bg-primary/70';
+    const numColor = isTop3 ? 'text-secondary font-bold' : 'text-primary';
+
+    return `
+      <div onclick="selectTeam('${row.team.replace(/'/g, "\\'")}'); switchView('team-analysis');"
+        class="grid grid-cols-[60px_2fr_1fr_1fr_1fr_1fr_1.5fr] gap-4 px-6 py-4 border-b border-outline-variant/10 items-center hover:bg-white/5 transition-colors cursor-pointer ${bgClass}">
+        <div class="font-metric-mono text-metric-mono ${rankColor}">${isTop3 ? '#' : ''}${rank}</div>
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-full bg-surface-container-highest flex-shrink-0 flex items-center justify-center font-label-caps text-on-surface-variant text-[10px]">${code}</div>
+          <span class="font-body-md text-body-md ${nameWeight} text-on-surface">${row.team}</span>
+        </div>
+        <div class="font-body-md text-body-md text-on-surface-variant">${row.continent}</div>
+        <div class="font-metric-mono text-metric-mono text-on-surface-variant text-right">${(row.prob_quarter_finalist * 100).toFixed(1)}%</div>
+        <div class="font-metric-mono text-metric-mono text-on-surface-variant text-right">${(row.prob_semi_finalist * 100).toFixed(1)}%</div>
+        <div class="font-metric-mono text-metric-mono text-on-surface-variant text-right">${(row.prob_finalist * 100).toFixed(1)}%</div>
+        <div class="flex items-center justify-end gap-3">
+          <div class="w-16 h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
+            <div class="h-full ${barColor} rounded-full" style="width: ${Math.min(winnerPct, 100)}%"></div>
+          </div>
+          <span class="font-metric-mono text-metric-mono ${numColor} w-12 text-right">${winnerPct}%</span>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+// ── View Switching ─────────────────────────────
+function switchView(view) {
+  const teamView = document.getElementById('view-team-analysis');
+  const leaderView = document.getElementById('view-leaderboard');
+  const teamSidebar = document.getElementById('team-sidebar');
+
+  const navTeam = document.getElementById('nav-team-analysis');
+  const navLeader = document.getElementById('nav-leaderboard');
+  const tabTeam = document.getElementById('tab-team-analysis');
+  const tabLeader = document.getElementById('tab-leaderboard');
+
+  if (view === 'team-analysis') {
+    teamView.classList.remove('view-hidden');
+    leaderView.classList.add('view-hidden');
+    teamSidebar.classList.remove('view-hidden');
+
+    navTeam.classList.add('text-primary', 'font-bold', 'border-r-2', 'border-primary', 'bg-primary/5');
+    navTeam.classList.remove('text-on-surface-variant');
+    navLeader.classList.remove('text-primary', 'font-bold', 'border-r-2', 'border-primary', 'bg-primary/5');
+    navLeader.classList.add('text-on-surface-variant');
+
+    tabTeam.classList.add('text-primary', 'border-b-2', 'border-primary');
+    tabTeam.classList.remove('text-on-surface-variant', 'border-transparent');
+    tabLeader.classList.remove('text-primary', 'border-primary');
+    tabLeader.classList.add('text-on-surface-variant', 'border-transparent');
+  } else {
+    teamView.classList.add('view-hidden');
+    leaderView.classList.remove('view-hidden');
+    teamSidebar.classList.add('view-hidden');
+
+    navLeader.classList.add('text-primary', 'font-bold', 'border-r-2', 'border-primary', 'bg-primary/5');
+    navLeader.classList.remove('text-on-surface-variant');
+    navTeam.classList.remove('text-primary', 'font-bold', 'border-r-2', 'border-primary', 'bg-primary/5');
+    navTeam.classList.add('text-on-surface-variant');
+
+    tabLeader.classList.add('text-primary', 'border-b-2', 'border-primary');
+    tabLeader.classList.remove('text-on-surface-variant', 'border-transparent');
+    tabTeam.classList.remove('text-primary', 'border-primary');
+    tabTeam.classList.add('text-on-surface-variant', 'border-transparent');
+  }
+}
+
+// ── Generate AI Report ─────────────────────────
+async function generateReport() {
+  if (!selectedTeam) return;
+
+  const btn = document.getElementById('generate-report-btn');
+  const reportText = document.getElementById('report-text');
+
+  // Loading state
+  btn.disabled = true;
+  btn.innerHTML = `<span class="material-symbols-outlined pulse-glow">bolt</span> Generating...`;
+  reportText.innerHTML = `<div class="skeleton h-4 w-full mb-3"></div><div class="skeleton h-4 w-5/6 mb-3"></div><div class="skeleton h-4 w-4/6"></div>`;
+
+  try {
+    const res = await fetch(`${API_BASE}/api/generate_report`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ team: selectedTeam }),
+    });
+    const data = await res.json();
+    reportText.textContent = data.report;
+  } catch (err) {
+    reportText.textContent = 'Failed to generate report. Please check the backend connection.';
+    console.error('Report generation failed:', err);
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = `<span class="material-symbols-outlined">bolt</span> Generate AI Report (Llama 3.1)`;
+  }
+}
+</script>
+</body>
+</html>

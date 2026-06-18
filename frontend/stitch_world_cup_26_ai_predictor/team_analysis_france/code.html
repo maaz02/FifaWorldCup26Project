@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>World Cup '26 AI Predictor - Team Analysis</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-low": "#151b2b",
+                    "on-surface": "#dde2f8",
+                    "on-tertiary": "#263143",
+                    "secondary-fixed-dim": "#eec200",
+                    "surface-bright": "#33394a",
+                    "on-error-container": "#ffdad6",
+                    "on-secondary-container": "#645000",
+                    "surface-container-lowest": "#080e1d",
+                    "on-tertiary-container": "#394458",
+                    "tertiary-container": "#a7b2c9",
+                    "error-container": "#93000a",
+                    "primary-fixed-dim": "#7bd0ff",
+                    "outline-variant": "#3e484f",
+                    "background": "#0d1322",
+                    "surface-container": "#191f2f",
+                    "on-secondary-fixed": "#231b00",
+                    "surface-dim": "#0d1322",
+                    "surface-container-highest": "#2f3445",
+                    "outline": "#87929a",
+                    "tertiary-fixed-dim": "#bcc7de",
+                    "secondary-fixed": "#ffe083",
+                    "on-tertiary-fixed": "#111c2d",
+                    "inverse-primary": "#00668a",
+                    "surface": "#0d1322",
+                    "surface-tint": "#7bd0ff",
+                    "on-error": "#690005",
+                    "on-tertiary-fixed-variant": "#3c475a",
+                    "on-secondary-fixed-variant": "#574500",
+                    "surface-variant": "#2f3445",
+                    "on-secondary": "#3c2f00",
+                    "primary-fixed": "#c4e7ff",
+                    "secondary-container": "#eec200",
+                    "secondary": "#ffe083",
+                    "on-primary-fixed": "#001e2c",
+                    "inverse-on-surface": "#2a3040",
+                    "primary": "#8ed5ff",
+                    "on-primary-container": "#004965",
+                    "surface-container-high": "#242a3a",
+                    "on-background": "#dde2f8",
+                    "on-primary-fixed-variant": "#004c69",
+                    "tertiary-fixed": "#d8e3fb",
+                    "error": "#ffb4ab",
+                    "primary-container": "#38bdf8",
+                    "on-primary": "#00354a",
+                    "on-surface-variant": "#bdc8d1",
+                    "inverse-surface": "#dde2f8",
+                    "tertiary": "#c2cde5"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "base": "8px",
+                    "gutter": "24px",
+                    "container-padding-mobile": "20px",
+                    "container-padding-desktop": "40px",
+                    "card-gap": "16px"
+            },
+            "fontFamily": {
+                    "label-caps": ["Inter", "sans-serif"],
+                    "metric-mono": ["JetBrains Mono", "monospace"],
+                    "headline-md": ["Sora", "sans-serif"],
+                    "display-lg": ["Sora", "sans-serif"],
+                    "display-lg-mobile": ["Sora", "sans-serif"],
+                    "body-md": ["Inter", "sans-serif"],
+                    "body-lg": ["Inter", "sans-serif"]
+            },
+            "fontSize": {
+                    "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700" }],
+                    "metric-mono": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+                    "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                    "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                    "display-lg-mobile": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                    "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                    "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }]
+            }
+          }
+        }
+      }
+    </script>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&amp;family=JetBrains+Mono:wght@500&amp;family=Sora:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+</head>
+<body class="bg-background text-on-background min-h-screen font-body-md overflow-hidden">
+<!-- JSON Component: SideNavBar -->
+<nav class="h-screen w-80 fixed left-0 top-0 border-r border-outline-variant/10 bg-surface-container-lowest/60 backdrop-blur-xl shadow-2xl flex flex-col py-gutter px-6 gap-6 z-50">
+<!-- Header -->
+<div class="flex items-center gap-4 mb-4">
+<div class="w-12 h-12 rounded-lg bg-surface-container-high border border-outline-variant/20 flex items-center justify-center overflow-hidden">
+<span class="material-symbols-outlined text-primary text-2xl" data-icon="sports_soccer">sports_soccer</span>
+</div>
+<div>
+<h1 class="font-headline-md text-[16px] leading-tight font-bold text-on-surface tracking-tight">World Cup '26 AI Predictor</h1>
+<p class="font-label-caps text-[10px] text-primary mt-1 opacity-80">AI-Powered Insights</p>
+</div>
+</div>
+<!-- Main Navigation -->
+<div class="flex flex-col gap-2 flex-1">
+<!-- Active Tab -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-primary font-bold border-r-2 border-primary bg-primary/5 hover:bg-white/5 transition-colors duration-200 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="font-label-caps text-label-caps">Team Analysis</span>
+</a>
+<!-- Inactive Tabs -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-colors duration-200 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="leaderboard">leaderboard</span>
+<span class="font-label-caps text-label-caps">Global Leaderboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-colors duration-200 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="model_training">model_training</span>
+<span class="font-label-caps text-label-caps">About the Model</span>
+</a>
+</div>
+<!-- CTA -->
+<button class="w-full bg-primary/10 text-primary border border-primary/20 font-label-caps text-label-caps py-3 rounded-lg hover:bg-primary/20 transition-colors duration-200 flex justify-center items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">magic_button</span>
+            Generate Scouting Report
+        </button>
+<!-- Footer Navigation -->
+<div class="flex flex-col gap-2 pt-4 border-t border-outline-variant/10">
+<a class="flex items-center gap-3 px-4 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="settings">settings</span>
+<span class="font-label-caps text-label-caps">Settings</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="help">help</span>
+<span class="font-label-caps text-label-caps">Support</span>
+</a>
+</div>
+</nav>
+<!-- JSON Component: TopAppBar -->
+<header class="fixed top-0 right-0 w-[calc(100%-20rem)] z-40 border-b border-white/5 bg-surface/40 backdrop-blur-md flex justify-between items-center h-16 px-gutter">
+<!-- Navigation Links (Left side of TopAppBar) -->
+<div class="flex items-center gap-6 h-full">
+<a class="h-full flex items-center text-primary border-b-2 border-primary pb-1 font-label-caps text-label-caps cursor-pointer active:opacity-80" href="#">Team Analysis</a>
+<a class="h-full flex items-center text-on-surface-variant hover:text-on-surface hover:text-primary transition-all duration-300 font-label-caps text-label-caps cursor-pointer active:opacity-80" href="#">Leaderboard</a>
+</div>
+<!-- Trailing Actions (Right side) -->
+<div class="flex items-center gap-4">
+<button class="text-primary font-label-caps text-label-caps hover:bg-white/5 px-4 py-2 rounded-lg transition-colors">Model Insights</button>
+<div class="flex items-center gap-2">
+<button class="text-on-surface-variant hover:text-on-surface p-2 rounded-full hover:bg-white/5 transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-on-surface p-2 rounded-full hover:bg-white/5 transition-colors">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Layout Container -->
+<div class="ml-80 pt-16 flex h-screen w-[calc(100%-20rem)]">
+<!-- Secondary Sidebar: Team Selection (Custom extension for the view requirement) -->
+<aside class="w-64 border-r border-outline-variant/10 bg-surface-container-low/30 overflow-y-auto hidden lg:flex flex-col">
+<div class="p-4 border-b border-outline-variant/10">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">search</span>
+<input class="w-full bg-surface-container-high border-none rounded-lg py-2 pl-10 pr-4 text-body-md font-body-md text-on-surface placeholder:text-on-surface-variant focus:ring-1 focus:ring-primary focus:outline-none" placeholder="Search Teams..." type="text"/>
+</div>
+</div>
+<div class="flex-1 py-2">
+<!-- Selected Team -->
+<button class="w-full flex items-center justify-between px-4 py-3 bg-primary/10 border-l-2 border-primary text-primary transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-6 h-6 rounded-full bg-surface-container-highest border border-primary/30 flex items-center justify-center text-[10px] font-bold">FR</div>
+<span class="font-body-md font-medium">France</span>
+</div>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+<!-- Other Teams -->
+<button class="w-full flex items-center justify-between px-4 py-3 text-on-surface-variant hover:bg-surface-container hover:text-on-surface border-l-2 border-transparent transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-6 h-6 rounded-full bg-surface-container-highest border border-outline-variant/30 flex items-center justify-center text-[10px] font-bold text-on-surface">BR</div>
+<span class="font-body-md font-medium">Brazil</span>
+</div>
+</button>
+<button class="w-full flex items-center justify-between px-4 py-3 text-on-surface-variant hover:bg-surface-container hover:text-on-surface border-l-2 border-transparent transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-6 h-6 rounded-full bg-surface-container-highest border border-outline-variant/30 flex items-center justify-center text-[10px] font-bold text-on-surface">AR</div>
+<span class="font-body-md font-medium">Argentina</span>
+</div>
+</button>
+<button class="w-full flex items-center justify-between px-4 py-3 text-on-surface-variant hover:bg-surface-container hover:text-on-surface border-l-2 border-transparent transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-6 h-6 rounded-full bg-surface-container-highest border border-outline-variant/30 flex items-center justify-center text-[10px] font-bold text-on-surface">EN</div>
+<span class="font-body-md font-medium">England</span>
+</div>
+</button>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 overflow-y-auto p-container-padding-desktop bg-gradient-to-br from-background to-surface-container-lowest">
+<!-- Content Header -->
+<div class="flex items-end justify-between mb-10">
+<div>
+<div class="flex items-center gap-3 mb-2">
+<span class="px-3 py-1 rounded-full bg-surface-container-high border border-outline-variant/20 font-label-caps text-[10px] text-on-surface-variant tracking-wider uppercase">Europe</span>
+</div>
+<h2 class="font-display-lg text-display-lg text-on-surface">France</h2>
+</div>
+<div class="text-right">
+<p class="font-label-caps text-label-caps text-on-surface-variant mb-1">Model Confidence</p>
+<p class="font-metric-mono text-metric-mono text-primary text-xl">High (92%)</p>
+</div>
+</div>
+<!-- Top Row: Probabilities -->
+<div class="mb-12">
+<h3 class="font-headline-md text-[18px] text-on-surface mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="timeline">timeline</span>
+                    Tournament Progression Probabilities
+                </h3>
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-card-gap">
+<!-- Quarter-Final Card -->
+<div class="bg-surface-container-high/40 backdrop-blur-lg border border-white/5 hover:border-primary/30 transition-colors duration-300 rounded-xl p-6 flex flex-col items-center justify-center relative overflow-hidden group">
+<div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary/0 to-transparent group-hover:via-primary/50 transition-all duration-500"></div>
+<div class="relative w-24 h-24 mb-4">
+<svg class="w-full h-full transform -rotate-90" viewbox="0 0 100 100">
+<circle class="text-surface-container-highest" cx="50" cy="50" fill="transparent" r="40" stroke="currentColor" stroke-width="8"></circle>
+<circle class="text-primary transition-all duration-1000 ease-out" cx="50" cy="50" fill="transparent" r="40" stroke="currentColor" stroke-dasharray="251.2" stroke-dashoffset="78.1" stroke-width="8"></circle>
+</svg>
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="font-metric-mono text-metric-mono text-on-surface font-bold text-lg">68.9%</span>
+</div>
+</div>
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest">Quarter-Final</span>
+</div>
+<!-- Semi-Final Card -->
+<div class="bg-surface-container-high/40 backdrop-blur-lg border border-white/5 hover:border-primary/30 transition-colors duration-300 rounded-xl p-6 flex flex-col items-center justify-center relative overflow-hidden group">
+<div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary/0 to-transparent group-hover:via-primary/50 transition-all duration-500"></div>
+<div class="relative w-24 h-24 mb-4">
+<svg class="w-full h-full transform -rotate-90" viewbox="0 0 100 100">
+<circle class="text-surface-container-highest" cx="50" cy="50" fill="transparent" r="40" stroke="currentColor" stroke-width="8"></circle>
+<circle class="text-primary transition-all duration-1000 ease-out" cx="50" cy="50" fill="transparent" r="40" stroke="currentColor" stroke-dasharray="251.2" stroke-dashoffset="105.7" stroke-width="8"></circle>
+</svg>
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="font-metric-mono text-metric-mono text-on-surface font-bold text-lg">57.9%</span>
+</div>
+</div>
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest">Semi-Final</span>
+</div>
+<!-- Final Card -->
+<div class="bg-surface-container-high/40 backdrop-blur-lg border border-white/5 hover:border-secondary/30 transition-colors duration-300 rounded-xl p-6 flex flex-col items-center justify-center relative overflow-hidden group">
+<div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-secondary/0 to-transparent group-hover:via-secondary/50 transition-all duration-500"></div>
+<div class="relative w-24 h-24 mb-4">
+<svg class="w-full h-full transform -rotate-90" viewbox="0 0 100 100">
+<circle class="text-surface-container-highest" cx="50" cy="50" fill="transparent" r="40" stroke="currentColor" stroke-width="8"></circle>
+<circle class="text-secondary transition-all duration-1000 ease-out" cx="50" cy="50" fill="transparent" r="40" stroke="currentColor" stroke-dasharray="251.2" stroke-dashoffset="106.7" stroke-width="8"></circle>
+</svg>
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="font-metric-mono text-metric-mono text-on-surface font-bold text-lg drop-shadow-[0_0_8px_rgba(255,224,131,0.3)]">57.5%</span>
+</div>
+</div>
+<span class="font-label-caps text-label-caps text-secondary uppercase tracking-widest">Final</span>
+</div>
+<!-- Winner Card -->
+<div class="bg-surface-container-high/40 backdrop-blur-lg border border-white/5 hover:border-secondary/30 transition-colors duration-300 rounded-xl p-6 flex flex-col items-center justify-center relative overflow-hidden group">
+<div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-secondary/0 to-transparent group-hover:via-secondary/50 transition-all duration-500"></div>
+<div class="absolute inset-0 bg-secondary/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<div class="relative w-24 h-24 mb-4">
+<svg class="w-full h-full transform -rotate-90" viewbox="0 0 100 100">
+<circle class="text-surface-container-highest" cx="50" cy="50" fill="transparent" r="40" stroke="currentColor" stroke-width="8"></circle>
+<circle class="text-secondary transition-all duration-1000 ease-out" cx="50" cy="50" fill="transparent" r="40" stroke="currentColor" stroke-dasharray="251.2" stroke-dashoffset="112" stroke-width="8"></circle>
+</svg>
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="font-metric-mono text-metric-mono text-on-surface font-bold text-lg drop-shadow-[0_0_8px_rgba(255,224,131,0.5)]">55.4%</span>
+</div>
+</div>
+<span class="font-label-caps text-label-caps text-secondary uppercase tracking-widest font-bold">Winner</span>
+</div>
+</div>
+</div>
+<!-- Middle Row: Stats -->
+<div class="mb-12">
+<h3 class="font-headline-md text-[18px] text-on-surface mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary-fixed-dim" data-icon="query_stats">query_stats</span>
+                    Pre-Tournament Profile
+                </h3>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-card-gap">
+<!-- Squad Value -->
+<div class="bg-surface-container-high/30 border border-white/5 rounded-xl p-6 flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center border border-white/5">
+<span class="material-symbols-outlined text-primary" data-icon="euro_symbol">euro_symbol</span>
+</div>
+<div>
+<p class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider mb-1">Squad Value</p>
+<p class="font-metric-mono text-metric-mono text-2xl text-on-surface">€1.29B</p>
+</div>
+</div>
+<!-- FIFA Rank -->
+<div class="bg-surface-container-high/30 border border-white/5 rounded-xl p-6 flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center border border-white/5">
+<span class="material-symbols-outlined text-secondary" data-icon="workspace_premium">workspace_premium</span>
+</div>
+<div>
+<p class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider mb-1">FIFA Rank</p>
+<p class="font-metric-mono text-metric-mono text-2xl text-on-surface">1</p>
+</div>
+</div>
+<!-- Form -->
+<div class="bg-surface-container-high/30 border border-white/5 rounded-xl p-6 flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center border border-white/5">
+<span class="material-symbols-outlined text-tertiary" data-icon="history">history</span>
+</div>
+<div>
+<p class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider mb-1">Form (Last 38)</p>
+<div class="flex gap-2 items-center mt-1">
+<span class="font-metric-mono text-metric-mono text-sm text-green-400">W: 25</span>
+<span class="text-outline-variant">|</span>
+<span class="font-metric-mono text-metric-mono text-sm text-red-400">L: 7</span>
+<span class="text-outline-variant">|</span>
+<span class="font-metric-mono text-metric-mono text-sm text-gray-400">D: 6</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Row: AI Scouting Report -->
+<div>
+<h3 class="font-headline-md text-[18px] text-on-surface mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary-container" data-icon="memory">memory</span>
+                    Tactical AI Scouting Report
+                </h3>
+<div class="bg-surface-container-high/50 backdrop-blur-xl border border-primary/20 rounded-xl p-8 relative overflow-hidden">
+<!-- Decorative background glow -->
+<div class="absolute -top-24 -right-24 w-64 h-64 bg-primary/10 rounded-full blur-3xl pointer-events-none"></div>
+<div class="flex flex-col md:flex-row gap-8 items-start relative z-10">
+<!-- Action Area -->
+<div class="flex-shrink-0">
+<button class="bg-primary text-on-primary px-6 py-4 rounded-lg font-label-caps text-label-caps font-bold tracking-wide flex items-center gap-3 shadow-[0_0_20px_rgba(142,213,255,0.3)] hover:shadow-[0_0_30px_rgba(142,213,255,0.5)] transition-shadow duration-300">
+<span class="material-symbols-outlined" data-icon="bolt">bolt</span>
+                                Generate AI Report (Llama 3.1)
+                            </button>
+<p class="font-label-caps text-[10px] text-on-surface-variant mt-3 text-center uppercase tracking-widest">Est. processing time: 1.2s</p>
+</div>
+<!-- Narrative Box -->
+<div class="flex-1 bg-surface-container-lowest/50 border-l-4 border-primary rounded-r-xl p-6 relative">
+<span class="material-symbols-outlined absolute top-4 right-4 text-primary/20 text-4xl pointer-events-none" data-icon="format_quote">format_quote</span>
+<p class="font-body-lg text-body-lg text-on-surface/90 leading-relaxed">
+                                The model favors France due to their depth in the midfield and consistent high-stakes performance. Their clinical finishing in previous qualifiers suggests a high probability of deep tournament progression.
+                            </p>
+<div class="mt-4 flex gap-2">
+<span class="px-2 py-1 bg-primary/10 text-primary text-[10px] font-label-caps uppercase rounded border border-primary/20">Midfield Depth</span>
+<span class="px-2 py-1 bg-primary/10 text-primary text-[10px] font-label-caps uppercase rounded border border-primary/20">Clinical Finishing</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Spacing -->
+<div class="h-12"></div>
+</main>
+</div>
+</body></html>
